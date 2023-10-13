@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -15,6 +16,8 @@ namespace Animation__3_
         private bool gray = false, orange = false, brown = false, cream = false;
         Color backColor = Color.White;
         Random generator = new Random();
+        SoundEffect _tribbleCoo;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -27,10 +30,10 @@ namespace Animation__3_
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.ApplyChanges();
 
-            greyTribbleRect = new Rectangle(generator.Next(1, 800), generator.Next(1, 500), 100, 100);
-            orangeTribbleRect = new Rectangle(generator.Next(1, 800), generator.Next(1, 500), 100, 100);
-            brownTribbleRect = new Rectangle(generator.Next(1, 800), generator.Next(1, 500), 100, 100);
-            creamTribbleRect = new Rectangle(generator.Next(1, 800), generator.Next(1, 500), 100, 100);
+            greyTribbleRect = new Rectangle(generator.Next(1, 690), generator.Next(1, 390), 100, 100);
+            orangeTribbleRect = new Rectangle(generator.Next(1, 690), generator.Next(1, 390), 100, 100);
+            brownTribbleRect = new Rectangle(generator.Next(1, 690), generator.Next(1, 390), 100, 100);
+            creamTribbleRect = new Rectangle(generator.Next(1, 690), generator.Next(1, 390), 100, 100);
 
             greyTribbleSpeed = new Vector2(3, 3);
             orangeTribbleSpeed = new Vector2(2, 4);
@@ -47,6 +50,7 @@ namespace Animation__3_
             _orangeTribble = Content.Load<Texture2D>("tribbleOrange");
             _brownTribble = Content.Load<Texture2D>("tribbleBrown");
             _creamTribble = Content.Load<Texture2D>("tribbleCream");
+            _tribbleCoo = Content.Load<SoundEffect>("tribble_coo");
         }
         protected override void Update(GameTime gameTime)
         {
@@ -66,11 +70,13 @@ namespace Animation__3_
             {
                 greyTribbleSpeed.X *= -1;
                 backColor = Color.Gray;
+                _tribbleCoo.Play();
             }
             if (greyTribbleRect.Bottom >= _graphics.PreferredBackBufferHeight || greyTribbleRect.Top <= 0)
             {
                 greyTribbleSpeed.Y *= -1;
                 backColor = Color.Gray;
+                _tribbleCoo.Play();
             }
             //Orange
             if (orangeTribbleRect.Right >= _graphics.PreferredBackBufferWidth || orangeTribbleRect.Left <= 0)
@@ -80,6 +86,7 @@ namespace Animation__3_
                 orangeTribbleRect.X = generator.Next(1, 699);
                 orangeTribbleRect.Y = generator.Next(1, 399);
                 backColor = Color.DarkOrange;
+                _tribbleCoo.Play();
             }
             if (orangeTribbleRect.Bottom >= _graphics.PreferredBackBufferHeight || orangeTribbleRect.Top <= 0)
             {
@@ -88,43 +95,51 @@ namespace Animation__3_
                 orangeTribbleRect.X = generator.Next(1, 699);
                 orangeTribbleRect.Y = generator.Next(1, 399);
                 backColor = Color.DarkOrange;
+                _tribbleCoo.Play();
             }
             //Cream
             if (creamTribbleRect.Top >= _graphics.PreferredBackBufferHeight)
             {
                 creamTribbleRect.Y = -100;
                 backColor = Color.AntiqueWhite;
+                _tribbleCoo.Play();
             }
             else if (creamTribbleRect.Bottom <= -100)
             {
                 creamTribbleRect.Y = _graphics.PreferredBackBufferHeight;
                 backColor = Color.AntiqueWhite;
+                _tribbleCoo.Play();
             }
             if (creamTribbleRect.Right >= _graphics.PreferredBackBufferWidth || creamTribbleRect.Left <= 0)
             {
                 creamTribbleSpeed.X *= -1;
                 backColor = Color.AntiqueWhite;
+                _tribbleCoo.Play();
             }
             //Brown
             if (brownTribbleRect.Left >= _graphics.PreferredBackBufferWidth)
             {
                 backColor = Color.SaddleBrown;
                 brownTribbleRect.X = -100;
+                _tribbleCoo.Play();
             }
             else if (brownTribbleRect.Right <= -100)
             {
                 backColor = Color.SaddleBrown;
                 brownTribbleRect.X = _graphics.PreferredBackBufferWidth;
+                _tribbleCoo.Play();
             }
             if (brownTribbleRect.Top >= _graphics.PreferredBackBufferHeight)
             {
                 backColor = Color.SaddleBrown;
                 brownTribbleRect.Y = -100;
+                _tribbleCoo.Play();
             }
             else if (brownTribbleRect.Bottom <= -100)
             {
                 backColor = Color.SaddleBrown;
                 brownTribbleRect.Y = _graphics.PreferredBackBufferHeight;
+                _tribbleCoo.Play();
             }
             base.Update(gameTime);
         }
